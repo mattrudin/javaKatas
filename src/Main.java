@@ -1,9 +1,10 @@
 public class Main {
 
     public static void main(String[] args) {
-        String string1 = "sldjfklsjfksjflksdjklsjksjkfjskfjsdklfjhlh";
-        String string2 = "dddddddddddddd";
-        String longestOfBoth = TwoToOne.longest(string1, string2);
-        System.out.println(longestOfBoth);
+        double height = 2.6;
+        double width = 4.2;
+        double length = 8.9;
+        String numberOfRollsNeeded = EasyWallpaper.wallpaper(length,width,height);
+        System.out.println(numberOfRollsNeeded);
     }
 }
