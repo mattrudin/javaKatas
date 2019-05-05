@@ -1,7 +1,9 @@
 public class Main {
 
     public static void main(String[] args) {
-        int[] weights = {1, 5, 3, 6, 7, 9, 4, 5};
-        int[] result = RowWeights.rowWeights(weights);
+        String string1 = "sldjfklsjfksjflksdjklsjksjkfjskfjsdklfjhlh";
+        String string2 = "dddddddddddddd";
+        String longestOfBoth = TwoToOne.longest(string1, string2);
+        System.out.println(longestOfBoth);
     }
 }
