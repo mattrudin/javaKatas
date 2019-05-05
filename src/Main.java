@@ -1,11 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        int[] values = {
-                1, 1, 1, 1, 5, 1, 1, 1
-        };
-
-        int result = Find.stray(values);
+        String original = "Hello World!";
+        String result = ReverseWord.reverseWords(original);
         System.out.println(result);
     }
 }
