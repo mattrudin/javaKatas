@@ -15,24 +15,25 @@ public class PlayPass {
             passPhrase = phraseToPass.toCharArray();
         }
 
-        // Todo: has problems with alphabet end (eg. z = {, Z = [)
         private Builder shiftBy(final int shift) {
             for (int i = 0; i < passPhrase.length; i++) {
                 if(Character.isLetter(passPhrase[i])) {
-                    int ascii = (int) passPhrase[i];
-                    ascii += shift;
-                    passPhrase[i] = (char) ascii;
+                    char letter = Character.toLowerCase(passPhrase[i]);
+                    letter = (char) (letter + shift);
+                    if(letter > 'z') {
+                        letter = (char) (letter - 26);
+                    }
+                    passPhrase[i] = letter;
                 }
             }
             return this;
         }
 
-        // Todo: does not return a int / char
         private Builder replaceByComplementOf(final int complement) {
             for (int i = 0; i < passPhrase.length; i++) {
                 if(Character.isDigit(passPhrase[i])) {
-                    int number = (int) passPhrase[i];
-                    passPhrase[i] = (char) (complement - number);
+                    int number = Character.getNumericValue(passPhrase[i]);
+                    passPhrase[i] = (char) ((complement - number) + '0');
                 }
             }
             return this;
