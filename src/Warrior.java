@@ -30,5 +30,35 @@ public class Warrior {
         return rank.toString();
     }
 
-    public List achievements() { return achievements; }
+    public List achievements() {
+        return achievements;
+    }
+
+    private void setExperience(int additionalExperience) {
+        experience += additionalExperience;
+    }
+
+    private void addAchievement(String description) {
+        achievements.add(description);
+    }
+
+    public String training(String description, int experience, int minimumLevel) {
+        if (level >= minimumLevel) {
+            setExperience(experience);
+            addAchievement(description);
+            return description;
+        } else {
+            return "Not strong enough";
+        }
+    }
+
+    // The following methods will be used for battle
+    private boolean isLevelValid(int level) {
+        return level >= 1 && level <= 100;
+    }
+
+    private int calculateExperiencePoints(int experience, int level) {
+        int result = 0;
+        return result;
+    }
 }
