@@ -7,6 +7,9 @@ public class Warrior {
     private int experience;
     private ranks rank;
     private final List<String> achievements;
+    private final int EXPERIENCE_THRESHOLD = 100;
+    private final int MAX_LEVEL = 100;
+    private final int MAX_EXPERIENCE = 10_000;
 
     private enum ranks {
         Pushover, Novice, Fighter, Warrior, Veteran, Sage, Elite, Conqueror, Champion, Master, Greatest;
@@ -42,10 +45,14 @@ public class Warrior {
     }
 
     private void setExperience(int additionalExperience) {
-        experience += additionalExperience;
+        if (experience + additionalExperience >= MAX_EXPERIENCE) {
+            experience = MAX_EXPERIENCE;
+        } else {
+            experience += additionalExperience;
+        }
     }
 
-    private void increaseLevel() { level++; }
+    private void setLevel(int level) { this.level += level; }
 
     private void increaseRank() { rank = ranks.next(); }
 
@@ -66,21 +73,40 @@ public class Warrior {
 
     // Battle method
     public String battle(int enemyLevel) {
-        if (util.isLevelValid(enemyLevel)) {
+        if (Util.isLevelValid(enemyLevel)) {
+            setExperience(Util.calculateExperiencePoints(level, enemyLevel));
+            updateLevel();
             return "A good fight";
         } else {
             return "Invalid level";
         }
     }
 
+    private void updateLevel() {
+        int normalizedLevel = ((experience / 100) * 100) % EXPERIENCE_THRESHOLD;
+        int difference = normalizedLevel - level;
+        if (level + difference >= MAX_LEVEL) {
+            difference = MAX_LEVEL;
+        }
+        setLevel(difference);
+    }
+
     private static class Util {
-        private boolean isLevelValid(int level) {
+        private static boolean isLevelValid(int level) {
             return level >= 1 && level <= 100;
         }
 
-        private int calculateExperiencePoints(int experience, int level) {
-            int result = 0;
-            return result;
+        private static int calculateExperiencePoints(int level, int enemyLevel) {
+            if (level == enemyLevel) {
+                return 10;
+            } else if ((level - 1) == enemyLevel) {
+                return 5;
+            } else if ((level - 2) >= enemyLevel) {
+                return 0;
+            } else {
+                int levelDifference = enemyLevel - level;
+                return 20 * levelDifference * levelDifference;
+            }
         }
     }
 }
