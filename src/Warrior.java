@@ -58,6 +58,7 @@ public class Warrior {
         if (level >= minimumLevel) {
             setExperience(experience);
             addAchievement(description);
+            updateLevelAndRank();
             return description;
         } else {
             return "Not strong enough";
@@ -68,13 +69,18 @@ public class Warrior {
     public String battle(int enemyLevel) {
         if (Util.isLevelValid(enemyLevel)) {
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
-            setLevel(Util.calculateLevel(experience, level));
-            setRank(Util.calculateRank(level));
+            updateLevelAndRank();
             return Util.generateResponse(level, enemyLevel);
         } else {
             return "Invalid level";
         }
     }
+
+    private void updateLevelAndRank() {
+        setLevel(Util.calculateLevel(experience, level));
+        setRank(Util.calculateRank(level));
+    }
+
 
     private static class Util {
         private static final int SAME_LEVEL = 10;
@@ -131,13 +137,16 @@ public class Warrior {
             return normalizedLevel;
         }
 
-        private static int calculateLevelDifference(int ownLevel, int enemyLevel) {
-            return ownLevel - enemyLevel;
-        }
-
         private static ranks calculateRank(int level) {
             int normalizedLevel = level / LEVEL_THRESHOLD;
+            if (normalizedLevel >= LEVEL_THRESHOLD) {
+                normalizedLevel = LEVEL_THRESHOLD;
+            }
             return ranks.values()[normalizedLevel];
+        }
+
+        private static int calculateLevelDifference(int ownLevel, int enemyLevel) {
+            return ownLevel - enemyLevel;
         }
 
         private static String generateResponse(int ownLevel, int enemyLevel) {

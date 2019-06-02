@@ -13,7 +13,7 @@ class WarriorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void experienceAtInitializationShouldBeOnehundred() {
+    void experienceAtInitializationShouldBe100() {
         Warrior tom = new Warrior();
         assertEquals(100, tom.experience());
     }
@@ -37,7 +37,7 @@ class WarriorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void shouldReturnUpdatedExperience() {
+    void shouldReturnUpdatedExperienceOf1100() {
         Warrior tom = new Warrior();
         tom.training("Has won", 1000, 1);
         assertEquals(1100, tom.experience());
@@ -92,5 +92,42 @@ class WarriorTest {
             tom.battle(1);
         }
         assertEquals(200, tom.experience());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectExperienceOf9100() {
+        Warrior tom = new Warrior();
+        tom.training("Defeated Chuck Norris", 9000, 1);
+        assertEquals(9100, tom.experience());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectLevelOf91() {
+        Warrior tom = new Warrior();
+        tom.training("Defeated Chuck Norris", 9000, 1);
+        assertEquals(91, tom.level());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectRankOfMaster() {
+        Warrior tom = new Warrior();
+        tom.training("Defeated Chuck Norris", 9000, 1);
+        assertEquals("Master", tom.rank());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectRankOfGreatest() {
+        Warrior tom = new Warrior();
+        tom.training("Defeated Chuck Norris", 9000, 1);
+        tom.training("Defeated Chuck Norris the second", 9000, 1);
+        assertEquals("Greatest", tom.rank());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectLevelOf100() {
+        Warrior tom = new Warrior();
+        tom.training("Defeated Chuck Norris", 9000, 1);
+        tom.training("Defeated Chuck Norris the second", 9000, 1);
+        assertEquals(100, tom.level());
     }
 }
