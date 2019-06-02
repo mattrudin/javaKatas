@@ -30,33 +30,26 @@ public class Warrior {
     public int level() {
         return level;
     }
-
     public int experience() {
         return experience;
     }
-
     public String rank() {
         return rank.toString();
     }
-
     public List achievements() {
         return achievements;
     }
-
+    private void setLevel(int level) { this.level += level; }
+    private void increaseRank() { rank = ranks.next(); }
+    private void addAchievement(String description) {
+        achievements.add(description);
+    }
     private void setExperience(int additionalExperience) {
         if (experience + additionalExperience >= MAX_EXPERIENCE) {
             experience = MAX_EXPERIENCE;
         } else {
             experience += additionalExperience;
         }
-    }
-
-    private void setLevel(int level) { this.level += level; }
-
-    private void increaseRank() { rank = ranks.next(); }
-
-    private void addAchievement(String description) {
-        achievements.add(description);
     }
 
     // Training method
@@ -75,7 +68,7 @@ public class Warrior {
         if (Util.isLevelValid(enemyLevel)) {
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
             updateLevel();
-            return "A good fight";
+            return Util.generateResponse(level, enemyLevel);
         } else {
             return "Invalid level";
         }
@@ -98,6 +91,20 @@ public class Warrior {
         private static final int MAX_LEVEL= 100;
         private static final int MIN_LEVEL = 1;
 
+        private enum battleResponse {
+            EASY("Easy fight"), GOOD("A good fight"), INTENSE("An intense fight");
+
+            private final String response;
+
+            battleResponse(String text) {
+                response = text;
+            }
+
+            private String getResponse() {
+                return response;
+            }
+        }
+
         private static boolean isLevelValid(int level) {
             return level >= MIN_LEVEL && level <= MAX_LEVEL;
         }
@@ -119,6 +126,17 @@ public class Warrior {
 
         private static int calculateLevelDifference(int ownLevel, int enemyLevel) {
             return ownLevel - enemyLevel;
+        }
+
+        private static String generateResponse(int ownLevel, int enemyLevel) {
+            int levelDifference = calculateLevelDifference(ownLevel, enemyLevel);
+            if (levelDifference >= 2) {
+                return battleResponse.valueOf("EASY").getResponse();
+            } else if (levelDifference >= 1) {
+                return battleResponse.valueOf("GOOD").getResponse();
+            } else {
+                return battleResponse.valueOf("INSENSE").getResponse();
+            }
         }
     }
 }
