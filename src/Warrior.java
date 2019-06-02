@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Warrior {
-    private final Util util = new Util();
     private int level;
     private int experience;
     private ranks rank;
@@ -96,17 +95,23 @@ public class Warrior {
             return level >= 1 && level <= 100;
         }
 
-        private static int calculateExperiencePoints(int level, int enemyLevel) {
-            if (level == enemyLevel) {
-                return 10;
-            } else if ((level - 1) == enemyLevel) {
-                return 5;
-            } else if ((level - 2) >= enemyLevel) {
-                return 0;
-            } else {
-                int levelDifference = enemyLevel - level;
-                return 20 * levelDifference * levelDifference;
+        private static int calculateExperiencePoints(int ownLevel, int enemyLevel) {
+            int levelDifference = calculateLevelDifference(ownLevel, enemyLevel);
+            switch (levelDifference) {
+                case 0:
+                    return 10;
+                case 1:
+                    return 5;
+                case 2:
+                    return 0;
+                default:
+                    int absoluteLevelDifference = Math.abs(levelDifference);
+                    return 20 * absoluteLevelDifference * absoluteLevelDifference;
             }
+        }
+
+        private static int calculateLevelDifference(int ownLevel, int enemyLevel) {
+            return ownLevel - enemyLevel;
         }
     }
 }
