@@ -6,8 +6,6 @@ public class Warrior {
     private int experience;
     private ranks rank;
     private final List<String> achievements;
-    private final int EXPERIENCE_THRESHOLD = 100;
-    private final int MAX_LEVEL = 100;
     private final int MAX_EXPERIENCE = 10_000;
 
     private enum ranks {
@@ -67,20 +65,13 @@ public class Warrior {
     public String battle(int enemyLevel) {
         if (Util.isLevelValid(enemyLevel)) {
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
-            updateLevel();
+            //System.out.println("Pre updateLevel: " + level);
+            setLevel(Util.calculateLevel(experience, level));
+            //System.out.println("Post updateLevel: " + level);
             return Util.generateResponse(level, enemyLevel);
         } else {
             return "Invalid level";
         }
-    }
-
-    private void updateLevel() {
-        int normalizedLevel = ((experience / 100) * 100) % EXPERIENCE_THRESHOLD;
-        int difference = normalizedLevel - level;
-        if (level + difference >= MAX_LEVEL) {
-            difference = MAX_LEVEL;
-        }
-        setLevel(difference);
     }
 
     private static class Util {
@@ -90,6 +81,8 @@ public class Warrior {
         private static final int ACCELERATE_CONST = 20;
         private static final int MAX_LEVEL= 100;
         private static final int MIN_LEVEL = 1;
+        private static final int EXPERIENCE_THRESHOLD = 100;
+
 
         private enum battleResponse {
             EASY("Easy fight"), GOOD("A good fight"), INTENSE("An intense fight");
@@ -124,6 +117,15 @@ public class Warrior {
             }
         }
 
+        private static int calculateLevel(int experience, int level) {
+            int normalizedLevel = ((experience / 100) * 100) % EXPERIENCE_THRESHOLD;
+            int difference = normalizedLevel - level;
+            if (level + difference >= MAX_LEVEL) {
+                difference = MAX_LEVEL;
+            }
+            return difference;
+        }
+
         private static int calculateLevelDifference(int ownLevel, int enemyLevel) {
             return ownLevel - enemyLevel;
         }
@@ -132,10 +134,10 @@ public class Warrior {
             int levelDifference = calculateLevelDifference(ownLevel, enemyLevel);
             if (levelDifference >= 2) {
                 return battleResponse.valueOf("EASY").getResponse();
-            } else if (levelDifference >= 1) {
+            } else if (levelDifference >= 0) {
                 return battleResponse.valueOf("GOOD").getResponse();
             } else {
-                return battleResponse.valueOf("INSENSE").getResponse();
+                return battleResponse.valueOf("INTENSE").getResponse();
             }
         }
     }

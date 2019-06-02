@@ -56,4 +56,16 @@ class WarriorTest {
         List<String> result = asList("Has won");
         assertEquals(result, tom.achievements());
     }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnEasyFight() {
+        Warrior tom = new Warrior();
+        assertEquals("A good fight", tom.battle(1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnInvalidLevel() {
+        Warrior tom = new Warrior();
+        assertEquals("Invalid level", tom.battle(101));
+    }
 }
