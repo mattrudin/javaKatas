@@ -37,7 +37,7 @@ public class Warrior {
     public List achievements() {
         return achievements;
     }
-    private void setLevel(int level) { this.level += level; }
+    private void setLevel(int level) { this.level = level; }
     private void increaseRank() { rank = ranks.next(); }
     private void addAchievement(String description) {
         achievements.add(description);
@@ -65,9 +65,7 @@ public class Warrior {
     public String battle(int enemyLevel) {
         if (Util.isLevelValid(enemyLevel)) {
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
-            System.out.println("Pre updateLevel: " + level);
             setLevel(Util.calculateLevel(experience, level));
-            System.out.println("Post updateLevel: " + level);
             return Util.generateResponse(level, enemyLevel);
         } else {
             return "Invalid level";
@@ -118,12 +116,11 @@ public class Warrior {
         }
 
         private static int calculateLevel(int experience, int level) {
-            int normalizedLevel = ((experience / 100) * 100) % EXPERIENCE_THRESHOLD;
-            int difference = normalizedLevel - level;
-            if (level + difference >= MAX_LEVEL) {
-                difference = MAX_LEVEL;
+            int normalizedLevel = experience / EXPERIENCE_THRESHOLD;
+            if (level + normalizedLevel >= MAX_LEVEL) {
+                normalizedLevel = MAX_LEVEL;
             }
-            return difference;
+            return normalizedLevel;
         }
 
         private static int calculateLevelDifference(int ownLevel, int enemyLevel) {

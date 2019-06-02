@@ -58,9 +58,18 @@ class WarriorTest {
     }
 
     @org.junit.jupiter.api.Test
-    void shouldReturnEasyFight() {
+    void shouldReturnGoodFight() {
         Warrior tom = new Warrior();
         assertEquals("A good fight", tom.battle(1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnEasyFight() {
+        Warrior tom = new Warrior();
+        for (int i = 0; i < 30; i++) {
+            tom.battle(1);
+        }
+        assertEquals("Easy fight", tom.battle(1));
     }
 
     @org.junit.jupiter.api.Test
