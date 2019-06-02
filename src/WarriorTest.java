@@ -68,4 +68,20 @@ class WarriorTest {
         Warrior tom = new Warrior();
         assertEquals("Invalid level", tom.battle(101));
     }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectExperienceOf110() {
+        Warrior tom = new Warrior();
+        tom.battle(1);
+        assertEquals(110, tom.experience());
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldReturnCorrectExperienceOf200() {
+        Warrior tom = new Warrior();
+        for (int i = 0; i < 10; i++) {
+            tom.battle(1);
+        }
+        assertEquals(200, tom.experience());
+    }
 }

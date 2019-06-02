@@ -65,9 +65,9 @@ public class Warrior {
     public String battle(int enemyLevel) {
         if (Util.isLevelValid(enemyLevel)) {
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
-            //System.out.println("Pre updateLevel: " + level);
+            System.out.println("Pre updateLevel: " + level);
             setLevel(Util.calculateLevel(experience, level));
-            //System.out.println("Post updateLevel: " + level);
+            System.out.println("Post updateLevel: " + level);
             return Util.generateResponse(level, enemyLevel);
         } else {
             return "Invalid level";
