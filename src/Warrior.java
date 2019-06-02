@@ -91,22 +91,29 @@ public class Warrior {
     }
 
     private static class Util {
+        private static final int SAME_LEVEL = 10;
+        private static final int ONE_LEVEL_LOWER = 5;
+        private static final int TWO_LEVEL_LOWER = 0;
+        private static final int ACCELERATE_CONST = 20;
+        private static final int MAX_LEVEL= 100;
+        private static final int MIN_LEVEL = 1;
+
         private static boolean isLevelValid(int level) {
-            return level >= 1 && level <= 100;
+            return level >= MIN_LEVEL && level <= MAX_LEVEL;
         }
 
         private static int calculateExperiencePoints(int ownLevel, int enemyLevel) {
             int levelDifference = calculateLevelDifference(ownLevel, enemyLevel);
             switch (levelDifference) {
                 case 0:
-                    return 10;
+                    return SAME_LEVEL;
                 case 1:
-                    return 5;
+                    return ONE_LEVEL_LOWER;
                 case 2:
-                    return 0;
+                    return TWO_LEVEL_LOWER;
                 default:
                     int absoluteLevelDifference = Math.abs(levelDifference);
-                    return 20 * absoluteLevelDifference * absoluteLevelDifference;
+                    return ACCELERATE_CONST * absoluteLevelDifference * absoluteLevelDifference;
             }
         }
 
