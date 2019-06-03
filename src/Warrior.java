@@ -67,13 +67,15 @@ public class Warrior {
 
     // Battle method
     public String battle(int enemyLevel) {
-        if (Util.isLevelValid(enemyLevel)) {
+        if (Util.isLevelValid(enemyLevel) && !Util.hasBeenDefeated(level, enemyLevel)) {
             String response = Util.generateResponse(level, enemyLevel);
             setExperience(Util.calculateExperiencePoints(level, enemyLevel));
             updateLevelAndRank();
             return response;
-        } else {
+        } else if(!Util.isLevelValid(enemyLevel)){
             return "Invalid level";
+        } else {
+            return "You've been defeated";
         }
     }
 
@@ -92,6 +94,8 @@ public class Warrior {
         private static final int MIN_LEVEL = 1;
         private static final int EXPERIENCE_THRESHOLD = 100;
         private static final int LEVEL_THRESHOLD = 10;
+        private static final int ENEMY_LEVEL_HIGHER = 5;
+        private static final int ENEMY_RANK_HIGHER = 1;
 
         private enum ranks {
             Pushover, Novice, Fighter, Warrior, Veteran, Sage, Elite, Conqueror, Champion, Master, Greatest;
@@ -113,6 +117,13 @@ public class Warrior {
 
         private static boolean isLevelValid(int level) {
             return level >= MIN_LEVEL && level <= MAX_LEVEL;
+        }
+
+        private static boolean hasBeenDefeated(int ownLevel, int enemyLevel) {
+            ranks ownRank = calculateRank(ownLevel);
+            ranks enemyRank = calculateRank(enemyLevel);
+            int difference = enemyRank.compareTo(ownRank);
+            return ownLevel + ENEMY_LEVEL_HIGHER <= enemyLevel && difference >= ENEMY_RANK_HIGHER;
         }
 
         private static int calculateExperiencePoints(int ownLevel, int enemyLevel) {

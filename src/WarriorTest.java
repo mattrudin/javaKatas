@@ -86,6 +86,12 @@ class WarriorTest {
     }
 
     @org.junit.jupiter.api.Test
+    void shouldReturnDefeated() {
+        Warrior tom = new Warrior();
+        assertEquals("You've been defeated", tom.battle(90));
+    }
+
+    @org.junit.jupiter.api.Test
     void shouldReturnCorrectExperienceOf110() {
         Warrior tom = new Warrior();
         tom.battle(1);
