@@ -22,10 +22,9 @@ public class MysteryColorAnalyzerImpl implements MysteryColorAnalyzer {
     }
 
     private void calculateColorOccurrence(List<Color> mysteryColors, Color color) {
-        for (Color mysteryColor : mysteryColors) {
-            if (mysteryColor == color) {
-                ++occurence;
-            }
-        }
+        occurence = (int) mysteryColors
+                .stream()
+                .filter(element -> element == color)
+                .count();
     }
 }
