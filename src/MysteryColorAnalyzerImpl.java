@@ -3,7 +3,7 @@ import java.util.List;
 public class MysteryColorAnalyzerImpl implements MysteryColorAnalyzer {
     private int occurence;
 
-    public int getOccurence() {
+    private int getOccurrence() {
         return occurence;
     }
 
@@ -14,11 +14,11 @@ public class MysteryColorAnalyzerImpl implements MysteryColorAnalyzer {
 
     @Override
     public int colorOccurrence(List<Color> mysteryColors, Color color) {
-        calculateColorOccurence(mysteryColors, color);
-        return getOccurence();
+        calculateColorOccurrence(mysteryColors, color);
+        return getOccurrence();
     }
 
-    private void calculateColorOccurence(List<Color> mysteryColors, Color color) {
+    private void calculateColorOccurrence(List<Color> mysteryColors, Color color) {
         for (Color mysteryColor : mysteryColors) {
             if (mysteryColor == color) {
                 ++occurence;
