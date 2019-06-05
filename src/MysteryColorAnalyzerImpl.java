@@ -1,4 +1,6 @@
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MysteryColorAnalyzerImpl implements MysteryColorAnalyzer {
     private int occurence;
@@ -9,7 +11,8 @@ public class MysteryColorAnalyzerImpl implements MysteryColorAnalyzer {
 
     @Override
     public int numberOfDistinctColors(List<Color> mysteryColors) {
-        return 0;
+        Set<Color> colors = new HashSet<>(mysteryColors);
+        return colors.size();
     }
 
     @Override
