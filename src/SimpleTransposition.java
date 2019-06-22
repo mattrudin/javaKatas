@@ -3,7 +3,6 @@ public class SimpleTransposition {
         char[] splitted = text.toCharArray();
         StringBuilder rowOne = new StringBuilder();
         StringBuilder rowTwo = new StringBuilder();
-
         for (int i = 0; i < splitted.length; i++) {
             if (i % 2 == 0) {
                 rowOne.append(splitted[i]);
